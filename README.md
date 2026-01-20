@@ -19,7 +19,7 @@ Each `run_dayz_server_*.bat` file starts the server for a **specific map** using
 | `run_dayz_server_chernarusplus.bat` | Chernarus Plus |
 | `run_dayz_server_livonia.bat` | Livonia |
 | `run_dayz_server_namalsk.bat` | Namalsk |
-| `run_dayz_server_deerisle.bat` | Deer Isle (older versions) |
+| `run_dayz_server_deerisle.bat` | Deer Isle (stable versions) |
 | `run_dayz_server_deerisle60.bat` | Deer Isle v6.0 |
 | `run_dayz_server_alteria.bat` | Alteria |
 | `run_dayz_server_sakhal.bat` | Sakhal |
