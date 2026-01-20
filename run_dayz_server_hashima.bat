@@ -9,12 +9,61 @@ set "SERVER_NAME=DayZ Private Server"
 set "SERVER_PORT=2302"
 set "SERVER_CONFIG=serverDZhashima.cfg"
 set "SERVER_CPU=2"
-set "STEAM_WORKSHOP=C:\Program Files (x86)\Steam\steamapps\common\DayZ\!Workshop"
+set "DAYZ_ID=221100"
+set "WORKSHOP_CONTENT=%SERVER_LOCATION%\steamapps\workshop\content\%DAYZ_ID%"
+set "STEAMCMD_DIR=C:\steamcmd"
 
 :: 4 hours = 14400 seconds
 set "RESTART_INTERVAL=14400"
 
+:: =====================
+:: MOD IDS
+:: =====================
+
+:: https://steamcommunity.com/workshop/filedetails/?id=3001202420
+:: https://steamcommunity.com/workshop/filedetails/?id=2781560371
+:: https://steamcommunity.com/workshop/filedetails/?id=2482312670
+
+set "MOD_HASHIMA_ISLANDS_ASSETS_ID=3001202420"
+set "MOD_HASHIMA_ISLANDS_ID=2781560371"
+set "MOD_SPAWNERBUBAKU_ID=2482312670"
+
+
+:: =====================
+:: MOD FOLDER NAMES
+:: =====================
+set "MOD_HASHIMA_ISLANDS_ASSETS_NAME=@HashimaIslandsAssets"
+set "MOD_HASHIMA_ISLANDS_NAME=@HashimaIslands"
+set "MOD_SPAWNERBUBAKU_NAME=@SpawnerBubaku"
+
 title %SERVER_NAME% batch
+
+:: =====================
+:: UPDATE SERVER
+:: =====================
+echo Updating DayZ server...
+call "%~dp0update_dayz_server.bat"
+if errorlevel 1 exit /b 1
+
+:: =====================
+:: DOWNLOAD MODS
+:: =====================
+echo Downloading mods via SteamCMD...
+
+cd /d "%STEAMCMD_DIR%" || exit /b 1
+
+steamcmd ^
++force_install_dir "%SERVER_LOCATION%" ^
++login %STEAM_USER% ^
++workshop_download_item %DAYZ_ID% %MOD_HASHIMA_ISLANDS_ASSETS_ID% ^
++workshop_download_item %DAYZ_ID% %MOD_HASHIMA_ISLANDS_ID% ^
++workshop_download_item %DAYZ_ID% %MOD_SPAWNERBUBAKU_ID% ^
++quit
+
+if errorlevel 1 (
+    echo ERROR: Failed to download mods
+    exit /b 1
+)
 
 :: =====================
 :: HASHIMA MISSION
@@ -46,21 +95,21 @@ robocopy "%TEMP%" "%SERVER_LOCATION%\mpmissions\main.hashima" "%AREAFILES_NAME%"
 if not exist "%SERVER_LOCATION%\keys" mkdir "%SERVER_LOCATION%\keys"
 
 :: Hashima Islands Assets
-robocopy "%STEAM_WORKSHOP%\@Hashima Islands Assets" "%SERVER_LOCATION%\@HashimaIslandsAssets" /E
-robocopy "%STEAM_WORKSHOP%\@Hashima Islands Assets\keys" "%SERVER_LOCATION%\keys" /E
+robocopy "%WORKSHOP_CONTENT%\%MOD_HASHIMA_ISLANDS_ASSETS_ID%" "%SERVER_LOCATION%\%MOD_HASHIMA_ISLANDS_ASSETS_NAME%" /E /R:3 /W:5
+robocopy "%WORKSHOP_CONTENT%\%MOD_HASHIMA_ISLANDS_ASSETS_ID%\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
 
 :: Hashima Islands
-robocopy "%STEAM_WORKSHOP%\@Hashima Islands" "%SERVER_LOCATION%\@HashimaIslands" /E
-robocopy "%STEAM_WORKSHOP%\@Hashima Islands\keys" "%SERVER_LOCATION%\keys" /E
+robocopy "%WORKSHOP_CONTENT%\%MOD_HASHIMA_ISLANDS_ID%" "%SERVER_LOCATION%\%MOD_HASHIMA_ISLANDS_NAME%" /E /R:3 /W:5
+robocopy "%WORKSHOP_CONTENT%\%MOD_HASHIMA_ISLANDS_ID%\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
 
 :: SpawnerBubaku
-robocopy "%STEAM_WORKSHOP%\@SpawnerBubaku" "%SERVER_LOCATION%\@SpawnerBubaku" /E
-robocopy "%STEAM_WORKSHOP%\@SpawnerBubaku\keys" "%SERVER_LOCATION%\keys" /E
+robocopy "%WORKSHOP_CONTENT%\%MOD_SPAWNERBUBAKU_ID%" "%SERVER_LOCATION%\%MOD_SPAWNERBUBAKU_NAME%" /E /R:3 /W:5
+robocopy "%WORKSHOP_CONTENT%\%MOD_SPAWNERBUBAKU_ID%\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
 
 :: =====================
 :: CONFIG
 :: =====================
-robocopy . "%SERVER_LOCATION%" "%SERVER_CONFIG%" /R:3 /W:5
+copy /Y "%~dp0%SERVER_CONFIG%" "%SERVER_LOCATION%\%SERVER_CONFIG%"
 
 :: =====================
 :: SERVER LOOP
@@ -74,8 +123,8 @@ start "DayZ Server" /min "DayZServer_x64.exe" ^
 -config=%SERVER_CONFIG% ^
 -port=%SERVER_PORT% ^
 -profiles=profiles ^
--mod=@HashimaIslandsAssets;@HashimaIslands ^
--serverMod=@SpawnerBubaku ^
+-mod=%MOD_HASHIMA_ISLANDS_ASSETS_NAME%;%MOD_HASHIMA_ISLANDS_NAME% ^
+-serverMod=%MOD_SPAWNERBUBAKU_NAME% ^
 -mission=mpmissions\main.hashima ^
 -cpuCount=%SERVER_CPU% ^
 -dologs -adminlog -netlog -freezecheck

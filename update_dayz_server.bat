@@ -1,7 +1,11 @@
 @echo off
 setlocal enabledelayedexpansion
 
+set "SERVER_LOCATION=C:\DayZServer"
+set "DAYZ_SERVER_ID=223350"
+
 :: Require STEAM_USER env var
+:: e.g. setx STEAM_USER=cooluser
 if "%STEAM_USER%"=="" (
     echo ERROR: STEAM_USER environment variable is not set
     exit /b 1
@@ -12,13 +16,11 @@ cd /d "C:\steamcmd" || (
     exit /b 1
 )
 
-set CMD=^
-+force_install_dir "C:\DayZServer" ^
+steamcmd ^
++force_install_dir "%SERVER_LOCATION%" ^
 +login %STEAM_USER% ^
-+app_update 223350 ^
++app_update %DAYZ_SERVER_ID% ^
 +quit
-
-steamcmd %CMD%
 
 if errorlevel 1 (
     echo SteamCMD failed with error %errorlevel%
