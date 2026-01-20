@@ -40,8 +40,6 @@ curl -L "%AREAFILES_URL%" -o "%AREAFILES_TEMP_FILE%"
 
 robocopy "%TEMP%" "%SERVER_LOCATION%\mpmissions\main.hashima" "%AREAFILES_NAME%" /R:3 /W:5
 
-pause
-
 :: =====================
 :: MODS
 :: =====================

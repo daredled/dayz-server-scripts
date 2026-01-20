@@ -57,8 +57,6 @@ echo [%date% %time%] Restarting server
 
 :: Kill server if still running
 taskkill /IM DayZServer_x64.exe /F >nul 2>&1
-
-:: Short pause before restart
 timeout /t 10 >nul
 
 goto START
