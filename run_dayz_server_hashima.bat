@@ -68,7 +68,7 @@ robocopy . "%SERVER_LOCATION%" "%SERVER_CONFIG%" /R:3 /W:5
 :START
 cd /d "%SERVER_LOCATION%" || exit /b 1
 
-echo [%date% %time%] %SERVER_NAME% started (restart #%RESTART_COUNT%)
+echo [%date% %time%] Starting %SERVER_NAME%
 
 start "DayZ Server" /min "DayZServer_x64.exe" ^
 -config=%SERVER_CONFIG% ^
