@@ -19,10 +19,9 @@ set "RESTART_INTERVAL=14400"
 :: =====================
 :: MOD IDS
 :: =====================
-
-:: https://steamcommunity.com/workshop/filedetails/?id=1559212036
-:: https://steamcommunity.com/workshop/filedetails/?id=1828439124
-:: https://steamcommunity.com/workshop/filedetails/?id=1750506510
+:: https://steamcommunity.com/workshop/filedetails/?id=1559212036 - CF
+:: https://steamcommunity.com/workshop/filedetails/?id=1828439124 - VPPAdminTools
+:: https://steamcommunity.com/workshop/filedetails/?id=1750506510 - DeerIsle Official (Experimental - Dev Build)
 set "MOD_CF_ID=1559212036"
 set "MOD_VPP_ID=1828439124"
 set "MOD_DEERISLE_ID=1750506510"

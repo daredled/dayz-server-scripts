@@ -9,7 +9,9 @@ set "SERVER_NAME=DayZ Namalsk Private Server"
 set "SERVER_PORT=2302"
 set "SERVER_CONFIG=serverDZnamalsk.cfg"
 set "SERVER_CPU=2"
-set "STEAM_WORKSHOP=C:\Program Files (x86)\Steam\steamapps\common\DayZ\!Workshop"
+set "DAYZ_ID=221100"
+set "WORKSHOP_CONTENT=%SERVER_LOCATION%\steamapps\workshop\content\%DAYZ_ID%"
+set "STEAMCMD_DIR=C:\steamcmd"
 
 :: 4 hours = 14400 seconds
 set "RESTART_INTERVAL=14400"
@@ -20,7 +22,55 @@ set "RESTART_INTERVAL=14400"
 :: Options: regular.namalsk | hardcore.namalsk
 set "NAMALSK_MISSION=regular.namalsk"
 
+:: =====================
+:: MOD IDS
+:: =====================
+:: https://steamcommunity.com/workshop/filedetails/?id=1559212036 - CF
+:: https://steamcommunity.com/workshop/filedetails/?id=2289456201 - Namalsk Island
+:: https://steamcommunity.com/workshop/filedetails/?id=2289461232 - Namalsk Survival
+:: https://steamcommunity.com/workshop/filedetails/?id=1828439124 - VPPAdminTools
+set "MOD_CF_ID=1559212036"
+set "MOD_NAMALSK_ISLAND_ID=2289456201"
+set "MOD_NAMALSK_SURVIVAL_ID=2289461232"
+set "MOD_VPP_ID=1828439124"
+
+:: =====================
+:: MOD FOLDER NAMES
+:: =====================
+set "MOD_CF_NAME=@CF"
+set "MOD_NAMALSK_ISLAND_NAME=@NamalskIsland"
+set "MOD_NAMALSK_SURVIVAL_NAME=@NamalskSurvival"
+set "MOD_VPP_NAME=@VPPAdminTools"
+
 title %SERVER_NAME% batch
+
+:: =====================
+:: UPDATE SERVER
+:: =====================
+echo Updating DayZ server...
+call "%~dp0update_dayz_server.bat"
+if errorlevel 1 exit /b 1
+
+:: =====================
+:: DOWNLOAD MODS
+:: =====================
+echo Downloading mods via SteamCMD...
+
+cd /d "%STEAMCMD_DIR%" || exit /b 1
+
+steamcmd ^
++force_install_dir "%SERVER_LOCATION%" ^
++login %STEAM_USER% ^
++workshop_download_item %DAYZ_ID% %MOD_CF_ID% ^
++workshop_download_item %DAYZ_ID% %MOD_NAMALSK_ISLAND_ID% ^
++workshop_download_item %DAYZ_ID% %MOD_NAMALSK_SURVIVAL_ID% ^
++workshop_download_item %DAYZ_ID% %MOD_VPP_ID% ^
++quit
+
+if errorlevel 1 (
+    echo ERROR: Failed to download mods
+    exit /b 1
+)
 
 :: =====================
 :: ENSURE REQUIRED FOLDERS
@@ -29,39 +79,43 @@ if not exist "%SERVER_LOCATION%\keys" mkdir "%SERVER_LOCATION%\keys"
 if not exist "%SERVER_LOCATION%\mpmissions" mkdir "%SERVER_LOCATION%\mpmissions"
 
 :: =====================
-:: MODS
-:: =====================
-
-:: CF
-robocopy "%STEAM_WORKSHOP%\@CF" "%SERVER_LOCATION%\@CF" /E /R:3 /W:5
-robocopy "%STEAM_WORKSHOP%\@CF\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
-
-:: Namalsk Island
-robocopy "%STEAM_WORKSHOP%\@Namalsk Island" "%SERVER_LOCATION%\@NamalskIsland" /E /R:3 /W:5
-robocopy "%STEAM_WORKSHOP%\@Namalsk Island\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
-
-:: Namalsk Survival
-robocopy "%STEAM_WORKSHOP%\@Namalsk Survival" "%SERVER_LOCATION%\@NamalskSurvival" /E /R:3 /W:5
-robocopy "%STEAM_WORKSHOP%\@Namalsk Survival\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
-
-:: (Optional) VPP Admin Tools
-robocopy "%STEAM_WORKSHOP%\@VPPAdminTools" "%SERVER_LOCATION%\@VPPAdminTools" /E /R:3 /W:5
-robocopy "%STEAM_WORKSHOP%\@VPPAdminTools\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
-
-:: =====================
 :: COPY NAMALSK MISSIONS
 :: =====================
 
 :: Regular
-robocopy "%STEAM_WORKSHOP%\@Namalsk Survival\Extras\Regular\regular.namalsk" "%SERVER_LOCATION%\mpmissions\regular.namalsk" /E /R:3 /W:5
+robocopy ^
+"%WORKSHOP_CONTENT%\%MOD_NAMALSK_SURVIVAL_ID%\Extras\Regular\regular.namalsk" ^
+"%SERVER_LOCATION%\mpmissions\regular.namalsk" /E /R:3 /W:5
 
 :: Hardcore
-robocopy "%STEAM_WORKSHOP%\@Namalsk Survival\Extras\Hardcore\hardcore.namalsk" "%SERVER_LOCATION%\mpmissions\hardcore.namalsk" /E /R:3 /W:5
+robocopy ^
+"%WORKSHOP_CONTENT%\%MOD_NAMALSK_SURVIVAL_ID%\Extras\Hardcore\hardcore.namalsk" ^
+"%SERVER_LOCATION%\mpmissions\hardcore.namalsk" /E /R:3 /W:5
+
+:: =====================
+:: MODS COPY
+:: =====================
+
+:: CF
+robocopy "%WORKSHOP_CONTENT%\%MOD_CF_ID%" "%SERVER_LOCATION%\%MOD_CF_NAME%" /E /R:3 /W:5
+robocopy "%WORKSHOP_CONTENT%\%MOD_CF_ID%\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
+
+:: Namalsk Island
+robocopy "%WORKSHOP_CONTENT%\%MOD_NAMALSK_ISLAND_ID%" "%SERVER_LOCATION%\%MOD_NAMALSK_ISLAND_NAME%" /E /R:3 /W:5
+robocopy "%WORKSHOP_CONTENT%\%MOD_NAMALSK_ISLAND_ID%\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
+
+:: Namalsk Survival
+robocopy "%WORKSHOP_CONTENT%\%MOD_NAMALSK_SURVIVAL_ID%" "%SERVER_LOCATION%\%MOD_NAMALSK_SURVIVAL_NAME%" /E /R:3 /W:5
+robocopy "%WORKSHOP_CONTENT%\%MOD_NAMALSK_SURVIVAL_ID%\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
+
+:: VPP (optional but enabled)
+robocopy "%WORKSHOP_CONTENT%\%MOD_VPP_ID%" "%SERVER_LOCATION%\%MOD_VPP_NAME%" /E /R:3 /W:5
+robocopy "%WORKSHOP_CONTENT%\%MOD_VPP_ID%\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
 
 :: =====================
 :: CONFIG
 :: =====================
-robocopy . "%SERVER_LOCATION%" "%SERVER_CONFIG%" /R:3 /W:5
+copy /Y "%~dp0%SERVER_CONFIG%" "%SERVER_LOCATION%\%SERVER_CONFIG%"
 
 :: =====================
 :: SERVER LOOP
@@ -69,22 +123,20 @@ robocopy . "%SERVER_LOCATION%" "%SERVER_CONFIG%" /R:3 /W:5
 :START
 cd /d "%SERVER_LOCATION%" || exit /b 1
 
-echo [%date% %time%] Starting %SERVER_NAME% (%NAMALSK_MISSION%)
+echo [%date% %time%] %SERVER_NAME% started (%NAMALSK_MISSION%)
 
 start "DayZ Server" /min "DayZServer_x64.exe" ^
 -config=%SERVER_CONFIG% ^
 -port=%SERVER_PORT% ^
 -mission=mpmissions\%NAMALSK_MISSION% ^
 -profiles=profiles ^
--mod=@CF;@NamalskIsland;@NamalskSurvival;@VPPAdminTools ^
+-mod=%MOD_CF_NAME%;%MOD_NAMALSK_ISLAND_NAME%;%MOD_NAMALSK_SURVIVAL_NAME%;%MOD_VPP_NAME% ^
 -cpuCount=%SERVER_CPU% ^
 -dologs -adminlog -netlog -freezecheck
 
-:: Run for 4 hours
 timeout /t %RESTART_INTERVAL% >nul
 
 echo [%date% %time%] Restarting server
-
 taskkill /IM DayZServer_x64.exe /F >nul 2>&1
 timeout /t 10 >nul
 

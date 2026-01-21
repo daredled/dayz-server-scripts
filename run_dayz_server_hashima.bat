@@ -19,10 +19,9 @@ set "RESTART_INTERVAL=14400"
 :: =====================
 :: MOD IDS
 :: =====================
-
-:: https://steamcommunity.com/workshop/filedetails/?id=3001202420
-:: https://steamcommunity.com/workshop/filedetails/?id=2781560371
-:: https://steamcommunity.com/workshop/filedetails/?id=2482312670
+:: https://steamcommunity.com/workshop/filedetails/?id=3001202420 - Hashima Islands Assets
+:: https://steamcommunity.com/workshop/filedetails/?id=2781560371 - Hashima Islands
+:: https://steamcommunity.com/workshop/filedetails/?id=2482312670 - SpawnerBubaku
 
 set "MOD_HASHIMA_ISLANDS_ASSETS_ID=3001202420"
 set "MOD_HASHIMA_ISLANDS_ID=2781560371"
