@@ -1,5 +1,5 @@
 @echo off
-setlocal enabledelayedexpansion
+setlocal
 
 set "SERVER_LOCATION=C:\DayZServer"
 set "DAYZ_SERVER_ID=223350"
@@ -11,20 +11,10 @@ if "%STEAM_USER%"=="" (
     exit /b 1
 )
 
-cd /d "C:\steamcmd" || (
-    echo Failed to change directory to SteamCMD
-    exit /b 1
-)
-
-steamcmd ^
-+force_install_dir "%SERVER_LOCATION%" ^
-+login %STEAM_USER% ^
-+app_update %DAYZ_SERVER_ID% ^
-+quit
-
+call "%~dp0common\install_steam_app.bat" %DAYZ_SERVER_ID% "%SERVER_LOCATION%"
 if errorlevel 1 (
-    echo SteamCMD failed with error %errorlevel%
-    exit /b %errorlevel%
+    echo ERROR: install_steam_app.bat failed.
+    exit /b 1
 )
 
 echo DayZ Server update completed successfully

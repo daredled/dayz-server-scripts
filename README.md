@@ -62,7 +62,9 @@ You can customize each map independently without affecting the others.
 ### Update script
 `update_dayz_server.bat`
 
-This script updates the **DayZ Dedicated Server** using **SteamCMD**.
+This script updates the **DayZ Dedicated Server** using **SteamCMD**, via the
+shared `common/install_steam_app.bat` (see below). Requires the `STEAM_USER`
+environment variable to be set (`setx STEAM_USER=yourSteamAccount`).
 
 Typical usage:
 - Run before starting the server
@@ -71,11 +73,22 @@ Typical usage:
 
 ---
 
+### `common/`
+Shared SteamCMD install/update scripts from the
+[steamcmd-server-scripts](https://github.com/daredled/steamcmd-server-scripts)
+repo, checked out here as a git submodule. Installs SteamCMD into
+`C:\steamcmd` automatically if it isn't already present. You normally don't
+need to run anything in here directly - `update_dayz_server.bat` calls it.
+
+Clone this repo with `git clone --recurse-submodules <url>`, or if already
+cloned, run `git submodule update --init`.
+
+---
+
 ## Requirements
 
 - Windows (tested on Windows Server / Windows 10+)
-- SteamCMD installed
-- DayZ Dedicated Server (App ID: `223350`)
+- DayZ Dedicated Server (App ID: `223350`) - installed automatically by `update_dayz_server.bat`
 - Required mods downloaded via Steam Workshop (if used)
 - Proper firewall port forwarding (default: UDP 2302–2305)
 
