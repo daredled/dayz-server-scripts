@@ -27,6 +27,7 @@ Each `dayz_server_*_run.bat` file starts the server for a **specific map** using
 
 Each script:
 - Points to the DayZ server install directory
+- Downloads and installs its required mods via the shared `common/steam_workshop_mods_install.bat` (see below)
 - Selects the correct mission/map
 - Loads the correct `serverDZ*.cfg`
 - Starts the server with the proper parameters
@@ -74,11 +75,12 @@ Typical usage:
 ---
 
 ### `common/`
-Shared SteamCMD install/update scripts from the
-[steamcmd-server-scripts](https://github.com/daredled/steamcmd-server-scripts)
+Shared SteamCMD install/update and Steam Workshop mod-download scripts from
+the [steamcmd-server-scripts](https://github.com/daredled/steamcmd-server-scripts)
 repo, checked out here as a git submodule. Installs SteamCMD into
 `C:\steamcmd` automatically if it isn't already present. You normally don't
-need to run anything in here directly - `dayz_server_install.bat` calls it.
+need to run anything in here directly - `dayz_server_install.bat` and each
+`dayz_server_*_run.bat` call it.
 
 Clone this repo with `git clone --recurse-submodules <url>`, or if already
 cloned, run `git submodule update --init`.
@@ -89,7 +91,7 @@ cloned, run `git submodule update --init`.
 
 - Windows (tested on Windows Server / Windows 10+)
 - DayZ Dedicated Server (App ID: `223350`) - installed automatically by `dayz_server_install.bat`
-- Required mods downloaded via Steam Workshop (if used)
+- Required mods - downloaded and installed automatically from Steam Workshop by each `dayz_server_*_run.bat`
 - Proper firewall port forwarding (default: UDP 2302–2305)
 
 ---

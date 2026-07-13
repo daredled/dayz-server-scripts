@@ -10,8 +10,6 @@ set "SERVER_PORT=2302"
 set "SERVER_CONFIG=serverDZhashima.cfg"
 set "SERVER_CPU=2"
 set "DAYZ_ID=221100"
-set "WORKSHOP_CONTENT=%SERVER_LOCATION%\steamapps\workshop\content\%DAYZ_ID%"
-set "STEAMCMD_DIR=C:\steamcmd"
 
 :: 4 hours = 14400 seconds
 set "RESTART_INTERVAL=14400"
@@ -45,24 +43,14 @@ call "%~dp0dayz_server_install.bat"
 if errorlevel 1 exit /b 1
 
 :: =====================
-:: DOWNLOAD MODS
+:: DOWNLOAD + INSTALL MODS
 :: =====================
-echo Downloading mods via SteamCMD...
-
-cd /d "%STEAMCMD_DIR%" || exit /b 1
-
-steamcmd ^
-+force_install_dir "%SERVER_LOCATION%" ^
-+login %STEAM_USER% ^
-+workshop_download_item %DAYZ_ID% %MOD_HASHIMA_ISLANDS_ASSETS_ID% ^
-+workshop_download_item %DAYZ_ID% %MOD_HASHIMA_ISLANDS_ID% ^
-+workshop_download_item %DAYZ_ID% %MOD_SPAWNERBUBAKU_ID% ^
-+quit
-
-if errorlevel 1 (
-    echo ERROR: Failed to download mods
-    exit /b 1
-)
+call "%~dp0common\steam_workshop_mods_install.bat" %DAYZ_ID% %SERVER_LOCATION% %MOD_HASHIMA_ISLANDS_ASSETS_ID% %MOD_HASHIMA_ISLANDS_ASSETS_NAME%
+if errorlevel 1 exit /b 1
+call "%~dp0common\steam_workshop_mods_install.bat" %DAYZ_ID% %SERVER_LOCATION% %MOD_HASHIMA_ISLANDS_ID% %MOD_HASHIMA_ISLANDS_NAME%
+if errorlevel 1 exit /b 1
+call "%~dp0common\steam_workshop_mods_install.bat" %DAYZ_ID% %SERVER_LOCATION% %MOD_SPAWNERBUBAKU_ID% %MOD_SPAWNERBUBAKU_NAME%
+if errorlevel 1 exit /b 1
 
 :: =====================
 :: HASHIMA MISSION
@@ -87,23 +75,6 @@ set "AREAFILES_TEMP_FILE=%TEMP%\%AREAFILES_NAME%"
 curl -L "%AREAFILES_URL%" -o "%AREAFILES_TEMP_FILE%"
 
 robocopy "%TEMP%" "%SERVER_LOCATION%\mpmissions\main.hashima" "%AREAFILES_NAME%" /R:3 /W:5
-
-:: =====================
-:: MODS
-:: =====================
-if not exist "%SERVER_LOCATION%\keys" mkdir "%SERVER_LOCATION%\keys"
-
-:: Hashima Islands Assets
-robocopy "%WORKSHOP_CONTENT%\%MOD_HASHIMA_ISLANDS_ASSETS_ID%" "%SERVER_LOCATION%\%MOD_HASHIMA_ISLANDS_ASSETS_NAME%" /E /R:3 /W:5
-robocopy "%WORKSHOP_CONTENT%\%MOD_HASHIMA_ISLANDS_ASSETS_ID%\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
-
-:: Hashima Islands
-robocopy "%WORKSHOP_CONTENT%\%MOD_HASHIMA_ISLANDS_ID%" "%SERVER_LOCATION%\%MOD_HASHIMA_ISLANDS_NAME%" /E /R:3 /W:5
-robocopy "%WORKSHOP_CONTENT%\%MOD_HASHIMA_ISLANDS_ID%\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
-
-:: SpawnerBubaku
-robocopy "%WORKSHOP_CONTENT%\%MOD_SPAWNERBUBAKU_ID%" "%SERVER_LOCATION%\%MOD_SPAWNERBUBAKU_NAME%" /E /R:3 /W:5
-robocopy "%WORKSHOP_CONTENT%\%MOD_SPAWNERBUBAKU_ID%\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
 
 :: =====================
 :: CONFIG

@@ -11,7 +11,6 @@ set "SERVER_CONFIG=serverDZnamalsk.cfg"
 set "SERVER_CPU=2"
 set "DAYZ_ID=221100"
 set "WORKSHOP_CONTENT=%SERVER_LOCATION%\steamapps\workshop\content\%DAYZ_ID%"
-set "STEAMCMD_DIR=C:\steamcmd"
 
 :: 4 hours = 14400 seconds
 set "RESTART_INTERVAL=14400"
@@ -52,30 +51,20 @@ call "%~dp0dayz_server_install.bat"
 if errorlevel 1 exit /b 1
 
 :: =====================
-:: DOWNLOAD MODS
+:: DOWNLOAD + INSTALL MODS
 :: =====================
-echo Downloading mods via SteamCMD...
-
-cd /d "%STEAMCMD_DIR%" || exit /b 1
-
-steamcmd ^
-+force_install_dir "%SERVER_LOCATION%" ^
-+login %STEAM_USER% ^
-+workshop_download_item %DAYZ_ID% %MOD_CF_ID% ^
-+workshop_download_item %DAYZ_ID% %MOD_NAMALSK_ISLAND_ID% ^
-+workshop_download_item %DAYZ_ID% %MOD_NAMALSK_SURVIVAL_ID% ^
-+workshop_download_item %DAYZ_ID% %MOD_VPP_ID% ^
-+quit
-
-if errorlevel 1 (
-    echo ERROR: Failed to download mods
-    exit /b 1
-)
+call "%~dp0common\steam_workshop_mods_install.bat" %DAYZ_ID% %SERVER_LOCATION% %MOD_CF_ID% %MOD_CF_NAME%
+if errorlevel 1 exit /b 1
+call "%~dp0common\steam_workshop_mods_install.bat" %DAYZ_ID% %SERVER_LOCATION% %MOD_NAMALSK_ISLAND_ID% %MOD_NAMALSK_ISLAND_NAME%
+if errorlevel 1 exit /b 1
+call "%~dp0common\steam_workshop_mods_install.bat" %DAYZ_ID% %SERVER_LOCATION% %MOD_NAMALSK_SURVIVAL_ID% %MOD_NAMALSK_SURVIVAL_NAME%
+if errorlevel 1 exit /b 1
+call "%~dp0common\steam_workshop_mods_install.bat" %DAYZ_ID% %SERVER_LOCATION% %MOD_VPP_ID% %MOD_VPP_NAME%
+if errorlevel 1 exit /b 1
 
 :: =====================
 :: ENSURE REQUIRED FOLDERS
 :: =====================
-if not exist "%SERVER_LOCATION%\keys" mkdir "%SERVER_LOCATION%\keys"
 if not exist "%SERVER_LOCATION%\mpmissions" mkdir "%SERVER_LOCATION%\mpmissions"
 
 :: =====================
@@ -91,26 +80,6 @@ robocopy ^
 robocopy ^
 "%WORKSHOP_CONTENT%\%MOD_NAMALSK_SURVIVAL_ID%\Extras\Hardcore\hardcore.namalsk" ^
 "%SERVER_LOCATION%\mpmissions\hardcore.namalsk" /E /R:3 /W:5
-
-:: =====================
-:: MODS COPY
-:: =====================
-
-:: CF
-robocopy "%WORKSHOP_CONTENT%\%MOD_CF_ID%" "%SERVER_LOCATION%\%MOD_CF_NAME%" /E /R:3 /W:5
-robocopy "%WORKSHOP_CONTENT%\%MOD_CF_ID%\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
-
-:: Namalsk Island
-robocopy "%WORKSHOP_CONTENT%\%MOD_NAMALSK_ISLAND_ID%" "%SERVER_LOCATION%\%MOD_NAMALSK_ISLAND_NAME%" /E /R:3 /W:5
-robocopy "%WORKSHOP_CONTENT%\%MOD_NAMALSK_ISLAND_ID%\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
-
-:: Namalsk Survival
-robocopy "%WORKSHOP_CONTENT%\%MOD_NAMALSK_SURVIVAL_ID%" "%SERVER_LOCATION%\%MOD_NAMALSK_SURVIVAL_NAME%" /E /R:3 /W:5
-robocopy "%WORKSHOP_CONTENT%\%MOD_NAMALSK_SURVIVAL_ID%\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
-
-:: VPP (optional but enabled)
-robocopy "%WORKSHOP_CONTENT%\%MOD_VPP_ID%" "%SERVER_LOCATION%\%MOD_VPP_NAME%" /E /R:3 /W:5
-robocopy "%WORKSHOP_CONTENT%\%MOD_VPP_ID%\keys" "%SERVER_LOCATION%\keys" /E /R:3 /W:5
 
 :: =====================
 :: CONFIG
