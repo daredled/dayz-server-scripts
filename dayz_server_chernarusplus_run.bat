@@ -9,7 +9,6 @@ set "SERVER_NAME=DayZ Chernarus Plus Private Server"
 set "SERVER_PORT=2302"
 set "SERVER_CONFIG=serverDZchernarusplus.cfg"
 set "SERVER_CPU=2"
-set "DAYZ_ID=221100"
 
 :: 4 hours = 14400 seconds
 set "RESTART_INTERVAL=14400"
@@ -40,9 +39,9 @@ if errorlevel 1 exit /b 1
 :: =====================
 :: DOWNLOAD + INSTALL MODS
 :: =====================
-call "%~dp0common\steam_workshop_mods_install.bat" %DAYZ_ID% %SERVER_LOCATION% %MOD_CF_ID% %MOD_CF_NAME%
+call "%~dp0dayz_workshop_mod_install.bat" %SERVER_LOCATION% %MOD_CF_ID% %MOD_CF_NAME%
 if errorlevel 1 exit /b 1
-call "%~dp0common\steam_workshop_mods_install.bat" %DAYZ_ID% %SERVER_LOCATION% %MOD_VPP_ID% %MOD_VPP_NAME%
+call "%~dp0dayz_workshop_mod_install.bat" %SERVER_LOCATION% %MOD_VPP_ID% %MOD_VPP_NAME%
 if errorlevel 1 exit /b 1
 
 :: =====================

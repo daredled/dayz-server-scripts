@@ -27,7 +27,7 @@ Each `dayz_server_*_run.bat` file starts the server for a **specific map** using
 
 Each script:
 - Points to the DayZ server install directory
-- Downloads and installs its required mods via the shared `common/steam_workshop_mods_install.bat` (see below)
+- Downloads and installs its required mods via `dayz_workshop_mod_install.bat` (see below)
 - Selects the correct mission/map
 - Loads the correct `serverDZ*.cfg`
 - Starts the server with the proper parameters
@@ -74,13 +74,23 @@ Typical usage:
 
 ---
 
+### `dayz_workshop_mod_install.bat <installDir> <modId> <folderName>`
+DayZ-specific wrapper around the shared `common/steam_workshop_mods_install.bat`
+(app ID `221100`). Downloads one Steam Workshop mod, installs it into
+`<installDir>\<folderName>`, then copies its `keys` subfolder into
+`<installDir>\keys` - the `keys` copy is a DayZ/Arma-engine convention, so it
+lives here rather than in the generic shared script. Call it once per mod;
+each `dayz_server_*_run.bat` does this automatically. You normally don't
+need to run it directly.
+
 ### `common/`
-Shared SteamCMD install/update and Steam Workshop mod-download scripts from
-the [steamcmd-server-scripts](https://github.com/daredled/steamcmd-server-scripts)
+Shared SteamCMD install/update and generic Steam Workshop mod-download
+scripts from the
+[steamcmd-server-scripts](https://github.com/daredled/steamcmd-server-scripts)
 repo, checked out here as a git submodule. Installs SteamCMD into
 `C:\steamcmd` automatically if it isn't already present. You normally don't
-need to run anything in here directly - `dayz_server_install.bat` and each
-`dayz_server_*_run.bat` call it.
+need to run anything in here directly - `dayz_server_install.bat` and
+`dayz_workshop_mod_install.bat` call it.
 
 Clone this repo with `git clone --recurse-submodules <url>`, or if already
 cloned, run `git submodule update --init`.

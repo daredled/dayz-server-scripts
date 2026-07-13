@@ -53,13 +53,13 @@ if errorlevel 1 exit /b 1
 :: =====================
 :: DOWNLOAD + INSTALL MODS
 :: =====================
-call "%~dp0common\steam_workshop_mods_install.bat" %DAYZ_ID% %SERVER_LOCATION% %MOD_CF_ID% %MOD_CF_NAME%
+call "%~dp0dayz_workshop_mod_install.bat" %SERVER_LOCATION% %MOD_CF_ID% %MOD_CF_NAME%
 if errorlevel 1 exit /b 1
-call "%~dp0common\steam_workshop_mods_install.bat" %DAYZ_ID% %SERVER_LOCATION% %MOD_NAMALSK_ISLAND_ID% %MOD_NAMALSK_ISLAND_NAME%
+call "%~dp0dayz_workshop_mod_install.bat" %SERVER_LOCATION% %MOD_NAMALSK_ISLAND_ID% %MOD_NAMALSK_ISLAND_NAME%
 if errorlevel 1 exit /b 1
-call "%~dp0common\steam_workshop_mods_install.bat" %DAYZ_ID% %SERVER_LOCATION% %MOD_NAMALSK_SURVIVAL_ID% %MOD_NAMALSK_SURVIVAL_NAME%
+call "%~dp0dayz_workshop_mod_install.bat" %SERVER_LOCATION% %MOD_NAMALSK_SURVIVAL_ID% %MOD_NAMALSK_SURVIVAL_NAME%
 if errorlevel 1 exit /b 1
-call "%~dp0common\steam_workshop_mods_install.bat" %DAYZ_ID% %SERVER_LOCATION% %MOD_VPP_ID% %MOD_VPP_NAME%
+call "%~dp0dayz_workshop_mod_install.bat" %SERVER_LOCATION% %MOD_VPP_ID% %MOD_VPP_NAME%
 if errorlevel 1 exit /b 1
 
 :: =====================

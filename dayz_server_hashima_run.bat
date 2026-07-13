@@ -9,7 +9,6 @@ set "SERVER_NAME=DayZ Hashima Private Server"
 set "SERVER_PORT=2302"
 set "SERVER_CONFIG=serverDZhashima.cfg"
 set "SERVER_CPU=2"
-set "DAYZ_ID=221100"
 
 :: 4 hours = 14400 seconds
 set "RESTART_INTERVAL=14400"
@@ -45,11 +44,11 @@ if errorlevel 1 exit /b 1
 :: =====================
 :: DOWNLOAD + INSTALL MODS
 :: =====================
-call "%~dp0common\steam_workshop_mods_install.bat" %DAYZ_ID% %SERVER_LOCATION% %MOD_HASHIMA_ISLANDS_ASSETS_ID% %MOD_HASHIMA_ISLANDS_ASSETS_NAME%
+call "%~dp0dayz_workshop_mod_install.bat" %SERVER_LOCATION% %MOD_HASHIMA_ISLANDS_ASSETS_ID% %MOD_HASHIMA_ISLANDS_ASSETS_NAME%
 if errorlevel 1 exit /b 1
-call "%~dp0common\steam_workshop_mods_install.bat" %DAYZ_ID% %SERVER_LOCATION% %MOD_HASHIMA_ISLANDS_ID% %MOD_HASHIMA_ISLANDS_NAME%
+call "%~dp0dayz_workshop_mod_install.bat" %SERVER_LOCATION% %MOD_HASHIMA_ISLANDS_ID% %MOD_HASHIMA_ISLANDS_NAME%
 if errorlevel 1 exit /b 1
-call "%~dp0common\steam_workshop_mods_install.bat" %DAYZ_ID% %SERVER_LOCATION% %MOD_SPAWNERBUBAKU_ID% %MOD_SPAWNERBUBAKU_NAME%
+call "%~dp0dayz_workshop_mod_install.bat" %SERVER_LOCATION% %MOD_SPAWNERBUBAKU_ID% %MOD_SPAWNERBUBAKU_NAME%
 if errorlevel 1 exit /b 1
 
 :: =====================
