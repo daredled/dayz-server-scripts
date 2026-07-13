@@ -103,7 +103,11 @@ Run **only one** of the following at a time:
 run_dayz_server_chernarusplus.bat
 run_dayz_server_namalsk.bat
 run_dayz_server_livonia.bat
+run_dayz_server_deerisle.bat
 run_dayz_server_deerisle60.bat
+run_dayz_server_alteria.bat
+run_dayz_server_sakhal.bat
+run_dayz_server_hashima.bat
 
 ```
 
@@ -141,7 +145,7 @@ Always verify:
 
 - Run **one map per server instance**
 - Keep backups of `mpmissions` and configs
-- Update mods before updating the server
+- Update the server before updating mods (each `run_dayz_server_*.bat` does this automatically)
 - Check `.RPT` logs if the server fails to start
 
 ---

@@ -5,7 +5,7 @@ setlocal
 :: SERVER CONFIG
 :: =====================
 set "SERVER_LOCATION=C:\DayZServer"
-set "SERVER_NAME=DayZ Private Server"
+set "SERVER_NAME=DayZ Hashima Private Server"
 set "SERVER_PORT=2302"
 set "SERVER_CONFIG=serverDZhashima.cfg"
 set "SERVER_CPU=2"
