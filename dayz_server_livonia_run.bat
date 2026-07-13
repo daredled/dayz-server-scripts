@@ -5,9 +5,9 @@ setlocal
 :: SERVER CONFIG
 :: =====================
 set "SERVER_LOCATION=C:\DayZServer"
-set "SERVER_NAME=DayZ Sakhal Private Server"
+set "SERVER_NAME=DayZ Livonia Private Server"
 set "SERVER_PORT=2302"
-set "SERVER_CONFIG=serverDZsakhal.cfg"
+set "SERVER_CONFIG=serverDZlivonia.cfg"
 set "SERVER_CPU=2"
 set "DAYZ_ID=221100"
 set "WORKSHOP_CONTENT=%SERVER_LOCATION%\steamapps\workshop\content\%DAYZ_ID%"
@@ -36,7 +36,7 @@ title %SERVER_NAME% batch
 :: UPDATE SERVER
 :: =====================
 echo Updating DayZ server...
-call "%~dp0update_dayz_server.bat"
+call "%~dp0dayz_server_install.bat"
 if errorlevel 1 exit /b 1
 
 :: =====================

@@ -5,9 +5,9 @@ setlocal
 :: SERVER CONFIG
 :: =====================
 set "SERVER_LOCATION=C:\DayZServer"
-set "SERVER_NAME=DayZ Deer Isle 5.9 Private Server"
+set "SERVER_NAME=DayZ Deer Isle 6.0 Private Server"
 set "SERVER_PORT=2302"
-set "SERVER_CONFIG=serverDZdeerisle.cfg"
+set "SERVER_CONFIG=serverDZdeerisle60.cfg"
 set "SERVER_CPU=2"
 set "DAYZ_ID=221100"
 set "WORKSHOP_CONTENT=%SERVER_LOCATION%\steamapps\workshop\content\%DAYZ_ID%"
@@ -21,17 +21,18 @@ set "RESTART_INTERVAL=14400"
 :: =====================
 :: https://steamcommunity.com/workshop/filedetails/?id=1559212036 - CF
 :: https://steamcommunity.com/workshop/filedetails/?id=1828439124 - VPPAdminTools
-:: https://steamcommunity.com/workshop/filedetails/?id=1602372402 - DeerIsle
+:: https://steamcommunity.com/workshop/filedetails/?id=1750506510 - DeerIsle Official (Experimental - Dev Build)
 set "MOD_CF_ID=1559212036"
 set "MOD_VPP_ID=1828439124"
-set "MOD_DEERISLE_ID=1602372402"
+set "MOD_DEERISLE_ID=1750506510"
+
 
 :: =====================
 :: MOD FOLDER NAMES
 :: =====================
 set "MOD_CF_NAME=@CF"
 set "MOD_VPP_NAME=@VPPAdminTools"
-set "MOD_DEERISLE_NAME=@DeerIsle"
+set "MOD_DEERISLE_NAME=@DeerIsleOfficialExperimentalDevBuild"
 
 title %SERVER_NAME% batch
 
@@ -39,7 +40,7 @@ title %SERVER_NAME% batch
 :: UPDATE SERVER
 :: =====================
 echo Updating DayZ server...
-call "%~dp0update_dayz_server.bat"
+call "%~dp0dayz_server_install.bat"
 if errorlevel 1 exit /b 1
 
 :: =====================
@@ -63,12 +64,12 @@ if errorlevel 1 (
 )
 
 :: =====================
-:: DEER ISLE MISSION (5.9)
+:: DEER ISLE MISSION
 :: =====================
-set "DEERISLE_REPO_ZIP_URL=https://github.com/johnmclane666/Deerisle-Stable/archive/refs/heads/master.zip"
-set "DEERISLE_ZIP_FILE=%TEMP%\deerisle_stable_master.zip"
-set "DEERISLE_EXTRACT_DIR=%TEMP%\deerisle_stable_extracted"
-set "DEERISLE_FOLDER_NAME=Deerisle-Stable-master\V5.9"
+set "DEERISLE_REPO_ZIP_URL=https://github.com/johnmclane666/Deerisle-6.0-Experimental/archive/refs/heads/main.zip"
+set "DEERISLE_ZIP_FILE=%TEMP%\deerisle_mission_main.zip"
+set "DEERISLE_EXTRACT_DIR=%TEMP%\deerisle_mission_extracted"
+set "DEERISLE_FOLDER_NAME=Deerisle-6.0-Experimental-main"
 
 curl -L "%DEERISLE_REPO_ZIP_URL%" -o "%DEERISLE_ZIP_FILE%"
 
@@ -76,9 +77,8 @@ if not exist "%DEERISLE_EXTRACT_DIR%" mkdir "%DEERISLE_EXTRACT_DIR%"
 
 tar -xf "%DEERISLE_ZIP_FILE%" -C "%DEERISLE_EXTRACT_DIR%"
 
-robocopy ^
-"%DEERISLE_EXTRACT_DIR%\%DEERISLE_FOLDER_NAME%\empty.deerisle" ^
-"%SERVER_LOCATION%\mpmissions\empty.deerisle" /E /R:3 /W:5
+robocopy "%DEERISLE_EXTRACT_DIR%\%DEERISLE_FOLDER_NAME%\empty.deerisle" ^
+"%SERVER_LOCATION%\mpmissions\experimental.deerisle" /E /R:3 /W:5
 
 :: =====================
 :: MODS COPY

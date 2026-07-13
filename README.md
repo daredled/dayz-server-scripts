@@ -12,18 +12,18 @@ It is designed for **self-hosted private servers**, making it easy to:
 ## Repository Structure
 
 ### Server launch scripts (`.bat`)
-Each `run_dayz_server_*.bat` file starts the server for a **specific map** using its corresponding configuration file.
+Each `dayz_server_*_run.bat` file starts the server for a **specific map** using its corresponding configuration file.
 
 | Script | Map |
 |------|----|
-| `run_dayz_server_chernarusplus.bat` | Chernarus Plus |
-| `run_dayz_server_livonia.bat` | Livonia |
-| `run_dayz_server_namalsk.bat` | Namalsk |
-| `run_dayz_server_deerisle.bat` | Deer Isle (stable versions) |
-| `run_dayz_server_deerisle60.bat` | Deer Isle v6.0 |
-| `run_dayz_server_alteria.bat` | Alteria |
-| `run_dayz_server_sakhal.bat` | Sakhal |
-| `run_dayz_server_hashima.bat` | Hashima |
+| `dayz_server_chernarusplus_run.bat` | Chernarus Plus |
+| `dayz_server_livonia_run.bat` | Livonia |
+| `dayz_server_namalsk_run.bat` | Namalsk |
+| `dayz_server_deerisle_run.bat` | Deer Isle (stable versions) |
+| `dayz_server_deerisle60_run.bat` | Deer Isle v6.0 |
+| `dayz_server_alteria_run.bat` | Alteria |
+| `dayz_server_sakhal_run.bat` | Sakhal |
+| `dayz_server_hashima_run.bat` | Hashima |
 
 Each script:
 - Points to the DayZ server install directory
@@ -60,10 +60,10 @@ You can customize each map independently without affecting the others.
 ---
 
 ### Update script
-`update_dayz_server.bat`
+`dayz_server_install.bat`
 
 This script updates the **DayZ Dedicated Server** using **SteamCMD**, via the
-shared `common/install_steam_app.bat` (see below). Requires the `STEAM_USER`
+shared `common/steam_app_install.bat` (see below). Requires the `STEAM_USER`
 environment variable to be set (`setx STEAM_USER=yourSteamAccount`).
 
 Typical usage:
@@ -78,7 +78,7 @@ Shared SteamCMD install/update scripts from the
 [steamcmd-server-scripts](https://github.com/daredled/steamcmd-server-scripts)
 repo, checked out here as a git submodule. Installs SteamCMD into
 `C:\steamcmd` automatically if it isn't already present. You normally don't
-need to run anything in here directly - `update_dayz_server.bat` calls it.
+need to run anything in here directly - `dayz_server_install.bat` calls it.
 
 Clone this repo with `git clone --recurse-submodules <url>`, or if already
 cloned, run `git submodule update --init`.
@@ -88,7 +88,7 @@ cloned, run `git submodule update --init`.
 ## Requirements
 
 - Windows (tested on Windows Server / Windows 10+)
-- DayZ Dedicated Server (App ID: `223350`) - installed automatically by `update_dayz_server.bat`
+- DayZ Dedicated Server (App ID: `223350`) - installed automatically by `dayz_server_install.bat`
 - Required mods downloaded via Steam Workshop (if used)
 - Proper firewall port forwarding (default: UDP 2302–2305)
 
@@ -100,7 +100,7 @@ cloned, run `git submodule update --init`.
 Run:
 ```
 
-update_dayz_server.bat
+dayz_server_install.bat
 
 ```
 
@@ -113,14 +113,14 @@ Run **only one** of the following at a time:
 
 ```
 
-run_dayz_server_chernarusplus.bat
-run_dayz_server_namalsk.bat
-run_dayz_server_livonia.bat
-run_dayz_server_deerisle.bat
-run_dayz_server_deerisle60.bat
-run_dayz_server_alteria.bat
-run_dayz_server_sakhal.bat
-run_dayz_server_hashima.bat
+dayz_server_chernarusplus_run.bat
+dayz_server_namalsk_run.bat
+dayz_server_livonia_run.bat
+dayz_server_deerisle_run.bat
+dayz_server_deerisle60_run.bat
+dayz_server_alteria_run.bat
+dayz_server_sakhal_run.bat
+dayz_server_hashima_run.bat
 
 ```
 
@@ -158,7 +158,7 @@ Always verify:
 
 - Run **one map per server instance**
 - Keep backups of `mpmissions` and configs
-- Update the server before updating mods (each `run_dayz_server_*.bat` does this automatically)
+- Update the server before updating mods (each `dayz_server_*_run.bat` does this automatically)
 - Check `.RPT` logs if the server fails to start
 
 ---

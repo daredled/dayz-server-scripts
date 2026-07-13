@@ -41,7 +41,7 @@ title %SERVER_NAME% batch
 :: UPDATE SERVER
 :: =====================
 echo Updating DayZ server...
-call "%~dp0update_dayz_server.bat"
+call "%~dp0dayz_server_install.bat"
 if errorlevel 1 exit /b 1
 
 :: =====================

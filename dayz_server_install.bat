@@ -11,9 +11,9 @@ if "%STEAM_USER%"=="" (
     exit /b 1
 )
 
-call "%~dp0common\install_steam_app.bat" %DAYZ_SERVER_ID% "%SERVER_LOCATION%"
+call "%~dp0common\steam_app_install.bat" %DAYZ_SERVER_ID% "%SERVER_LOCATION%"
 if errorlevel 1 (
-    echo ERROR: install_steam_app.bat failed.
+    echo ERROR: steam_app_install.bat failed.
     exit /b 1
 )
 
