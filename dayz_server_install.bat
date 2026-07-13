@@ -5,7 +5,7 @@ set "SERVER_LOCATION=C:\DayZServer"
 set "DAYZ_SERVER_ID=223350"
 
 :: Require STEAM_USER env var
-:: e.g. setx STEAM_USER=cooluser
+:: e.g. setx STEAM_USER cooluser
 if "%STEAM_USER%"=="" (
     echo ERROR: STEAM_USER environment variable is not set
     exit /b 1

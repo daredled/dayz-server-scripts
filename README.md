@@ -64,7 +64,7 @@ You can customize each map independently without affecting the others.
 
 This script updates the **DayZ Dedicated Server** using **SteamCMD**, via the
 shared `common/steam_app_install.bat` (see below). Requires the `STEAM_USER`
-environment variable to be set (`setx STEAM_USER=yourSteamAccount`).
+environment variable to be set (`setx STEAM_USER yourSteamAccount`).
 
 Typical usage:
 - Run before starting the server
