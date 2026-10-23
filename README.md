@@ -23,6 +23,7 @@ Each `dayz_server_*_run.bat` file starts the server for a **specific map** using
 | `dayz_server_deerisle60_run.bat` | Deer Isle v6.0 |
 | `dayz_server_alteria_run.bat` | Alteria |
 | `dayz_server_sakhal_run.bat` | Sakhal |
+| `dayz_server_badlands_run.bat` | Badlands (Nasdara) |
 | `dayz_server_hashima_run.bat` | Hashima |
 
 Each script:
@@ -46,6 +47,7 @@ Each map has its **own server configuration file**.
 | `serverDZdeerisle60.cfg` | Deer Isle v6.0 |
 | `serverDZalteria.cfg` | Alteria |
 | `serverDZsakhal.cfg` | Sakhal |
+| `serverDZbadlands.cfg` | Badlands (Nasdara) |
 | `serverDZhashima.cfg` | Hashima |
 
 These files control:
@@ -132,6 +134,7 @@ dayz_server_deerisle_run.bat
 dayz_server_deerisle60_run.bat
 dayz_server_alteria_run.bat
 dayz_server_sakhal_run.bat
+dayz_server_badlands_run.bat
 dayz_server_hashima_run.bat
 
 ```
@@ -157,8 +160,9 @@ Restart the server after changes.
 ## Notes on Maps
 
 - **Namalsk** requires its official mission files and server mod.
+- **Sakhal** and **Badlands** are official maps (missions `dayzOffline.sakhal` and `dayzOffline.nasdara`) and need no map-specific mods; Badlands ships with server update 1.30.
 - **Deer Isle 6.0** uses a different config to avoid compatibility issues.
-- **Alteria, Sakhal, Hashima** are community maps and may require additional mods.
+- **Alteria, Hashima** are community maps and may require additional mods.
 
 Always verify:
 - Mission folder name matches the `.bat` file
